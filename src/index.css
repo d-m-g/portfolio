@@ -38,6 +38,9 @@ body {
   background-color: var(--color-ink);
   color: var(--color-foreground);
   font-family: var(--font-body);
+  /* Bump base weight so Zodiak's fine high-contrast strokes read as
+     more solid (less "ажурный") in body copy. */
+  font-weight: 500;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }

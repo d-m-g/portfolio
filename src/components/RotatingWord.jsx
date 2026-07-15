@@ -26,9 +26,9 @@ export default function RotatingWord({ words, interval = 2100 }) {
       <AnimatePresence mode="popLayout" initial={false}>
         <motion.span
           key={words[i]}
-          initial={{ y: "105%" }}
+          initial={{ y: "125%" }}
           animate={{ y: 0 }}
-          exit={{ y: "-105%" }}
+          exit={{ y: "-125%" }}
           transition={{ duration: 0.55, ease }}
           className="text-accent [grid-area:1/1]"
         >
