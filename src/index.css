@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+/* ── Design tokens (editorial dark) ───────────────────────────── */
+@theme {
+  --color-ink: #101014;
+  --color-surface: #17171c;
+  --color-surface-2: #1d1d24;
+  --color-foreground: #fafafa;
+  --color-muted: #a1a1aa;
+  --color-faint: #71717a;
+  --color-border: #26262c;
+  --color-accent: #ec4899;
+  --color-accent-soft: #f472b6;
+  --color-on-accent: #0a0a0c;
+
+  --font-heading: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Base ─────────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-ink);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle grain/texture instead of glow-blobs — keeps it editorial */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.025;
+  background-image: radial-gradient(#fafafa 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+/* Visible focus for keyboard nav */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
