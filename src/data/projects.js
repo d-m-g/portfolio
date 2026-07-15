@@ -4,7 +4,7 @@
 export const projects = [
   {
     title: "Pecto",
-    year: "2023 — 2025",
+    year: "2023 — 2026",
     context: "ThinkAi OY",
     blurb:
       "A Finnish language-learning app. I implemented the iOS UI from Figma in Swift/SwiftUI, contributed to the Python backend and the Android build, and helped push it through the App Store release process.",
@@ -22,7 +22,7 @@ export const projects = [
     tags: ["React", "Capacitor.js", "JavaScript"],
     live: "https://soluscity.com",
     repo: "",
-    featured: true,
+    featured: false,
   },
   {
     title: "Coral",

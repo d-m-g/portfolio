@@ -24,10 +24,17 @@ export default function Marquee() {
   const track = [...stack, ...stack];
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-ink to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-ink to-transparent" />
-
+    <div
+      className="relative overflow-hidden"
+      style={{
+        // Fade the content's edges via a mask so it works over any
+        // background (the gradient wash shows through, no dark boxes).
+        maskImage:
+          "linear-gradient(to right, transparent, #000 4rem, #000 calc(100% - 4rem), transparent)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent, #000 4rem, #000 calc(100% - 4rem), transparent)",
+      }}
+    >
       <motion.ul
         className="flex w-max gap-6 pr-6"
         animate={{ x: ["0%", "-50%"] }}

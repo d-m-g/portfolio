@@ -6,12 +6,13 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { ArrowUpRight, Code } from "lucide-react";
+import BorderTrail from "./BorderTrail.jsx";
 
 const ease = [0.16, 1, 0.3, 1];
 
 export default function ProjectCard({ project, index }) {
   const reduce = useReducedMotion();
-  const { title, year, context, blurb, tags, live, repo } = project;
+  const { title, year, context, blurb, tags, live, repo, featured } = project;
 
   // Pointer-tracked spotlight that follows the cursor across the card.
   const ref = useRef(null);
@@ -34,8 +35,13 @@ export default function ProjectCard({ project, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -60px 0px" }}
       transition={{ duration: 0.5, ease, delay: (index % 2) * 0.08 }}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 sm:p-8"
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 sm:p-8 ${
+        featured ? "border-accent/30" : "border-border"
+      }`}
     >
+      {/* featured: a light laps the border */}
+      {featured && <BorderTrail size={120} duration={7} />}
+
       {/* cursor spotlight */}
       {!reduce && (
         <motion.div
