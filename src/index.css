@@ -39,10 +39,9 @@ body::after {
   pointer-events: none;
   z-index: -1;
   opacity: 0.15;
-  background: url("/bg-gradient.svg") center / cover no-repeat;
+  background: url("/bg-gradient.svg") center / 80% auto no-repeat var(--color-ink);
   /* extra softening so blob edges never read as hard shapes */
   filter: blur(40px) saturate(1.1);
-  transform: scale(1.15);
 }
 
 /* Subtle grain/texture instead of glow-blobs — keeps it editorial */
