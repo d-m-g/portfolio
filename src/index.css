@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+/* ── Zodiak (self-hosted variable font) ───────────────────────── */
+@font-face {
+  font-family: "Zodiak";
+  src:
+    url("/fonts/Zodiak-Variable.woff2") format("woff2"),
+    url("/fonts/Zodiak-Variable.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ── Design tokens (editorial dark) ───────────────────────────── */
 @theme {
   --color-ink: #101014;
@@ -13,8 +24,8 @@
   --color-accent-soft: #f472b6;
   --color-on-accent: #0a0a0c;
 
-  --font-heading: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Zodiak", ui-serif, Georgia, serif;
+  --font-body: "Zodiak", ui-serif, Georgia, serif;
 }
 
 /* ── Base ─────────────────────────────────────────────────────── */
