@@ -1,4 +1,3 @@
-import CursorGlow from "./components/CursorGlow.jsx";
 import ScrollProgress from "./components/ScrollProgress.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
@@ -11,21 +10,18 @@ import Footer from "./components/Footer.jsx";
 
 export default function App() {
   return (
-    <>
-      <CursorGlow />
-      <div className="relative z-10">
-        <ScrollProgress />
-        <Navbar />
-        <main>
-          <Hero />
-          <Stats />
-          <Projects />
-          <Experience />
-          <About />
-          <Contact />
-        </main>
-        <Footer />
-      </div>
-    </>
+    <div className="relative z-10">
+      <ScrollProgress />
+      <Navbar />
+      <main>
+        <Hero />
+        <Stats />
+        <Projects />
+        <Experience />
+        <About />
+        <Contact />
+      </main>
+      <Footer />
+    </div>
   );
 }
