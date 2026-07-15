@@ -10,10 +10,13 @@ export const site = {
   email: "gorovoi.dmitrii@gmail.com",
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/dmitrii-gorovoi" },
-    { label: "GitHub", href: "https://github.com/" },
+    { label: "GitHub", href: "https://github.com/d-m-g/" },
     { label: "Email", href: "mailto:gorovoi.dmitrii@gmail.com" },
   ],
 };
+
+// Hero headline rotates through what you build. Order = the story you tell.
+export const disciplines = ["iOS apps", "ML models", "web products", "AI prototypes"];
 
 // Small stats strip — numbers count up when scrolled into view.
 export const stats = [
@@ -82,16 +85,6 @@ export const about = {
 // Work history — rendered as an animated timeline.
 export const experience = [
   {
-    company: "AlvaSoft",
-    role: "Web / Mobile Developer",
-    period: "2025",
-    points: [
-      "Built cross-platform web-app wrappers with Capacitor.js for iOS and Android.",
-      "Contributed to React web development and integrated native/web plugin functionality.",
-    ],
-    tech: ["React", "JavaScript", "Capacitor.js"],
-  },
-  {
     company: "ThinkAi OY",
     role: "iOS / Backend Developer",
     period: "2023 — 2026",
@@ -101,6 +94,16 @@ export const experience = [
       "Worked on Python backend services and collaborated across frontend/backend.",
     ],
     tech: ["Swift", "SwiftUI", "Python"],
+  },
+  {
+    company: "AlvaSoft",
+    role: "Web / Mobile Developer",
+    period: "2025",
+    points: [
+      "Built cross-platform web-app wrappers with Capacitor.js for iOS and Android.",
+      "Contributed to React web development and integrated native/web plugin functionality.",
+    ],
+    tech: ["React", "JavaScript", "Capacitor.js"],
   },
   {
     company: "Aldanex OY",

@@ -7,22 +7,23 @@ import {
   useTransform,
 } from "motion/react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
-import { site } from "../data/site.js";
+import RotatingWord from "./RotatingWord.jsx";
+import Marquee from "./Marquee.jsx";
+import { site, disciplines } from "../data/site.js";
 
 const ease = [0.16, 1, 0.3, 1];
 
 export default function Hero() {
   const reduce = useReducedMotion();
-  const words = site.tagline.split(" ");
 
-  // Pointer parallax for the decorative accent glyph.
+  // Pointer parallax for the single decorative ring.
   const ref = useRef(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
   const sx = useSpring(mx, { stiffness: 60, damping: 18 });
   const sy = useSpring(my, { stiffness: 60, damping: 18 });
-  const px = useTransform(sx, (v) => v * 24);
-  const py = useTransform(sy, (v) => v * 24);
+  const px = useTransform(sx, (v) => v * 26);
+  const py = useTransform(sy, (v) => v * 26);
 
   const onPointerMove = (e) => {
     if (reduce) return;
@@ -37,23 +38,20 @@ export default function Hero() {
       id="top"
       ref={ref}
       onPointerMove={onPointerMove}
-      className="relative mx-auto flex min-h-[92vh] max-w-5xl flex-col justify-center overflow-hidden px-6 pt-24"
+      className="relative mx-auto flex min-h-[82vh] max-w-5xl flex-col justify-center overflow-hidden px-6 pb-10 pt-28"
     >
-      {/* decorative parallax accent — a large soft ring, not a glow blob */}
+      {/* single subtle parallax ring — quiet ambient depth */}
       <motion.div
         aria-hidden="true"
         style={{ x: px, y: py }}
-        className="pointer-events-none absolute -right-24 top-24 -z-0 h-72 w-72 rounded-full border border-accent/20 sm:h-96 sm:w-96"
-      >
-        <div className="absolute inset-8 rounded-full border border-accent/10" />
-        <div className="absolute inset-20 rounded-full border border-accent/10" />
-      </motion.div>
+        className="pointer-events-none absolute -right-20 top-16 -z-0 h-80 w-80 rounded-full border border-accent/15 sm:h-[26rem] sm:w-[26rem]"
+      />
 
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease }}
-        className="mb-6 inline-flex w-fit items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5"
+        className="mb-7 inline-flex w-fit items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5"
       >
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
@@ -64,35 +62,36 @@ export default function Hero() {
         </span>
       </motion.div>
 
-      <motion.p
-        initial={reduce ? false : { opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease, delay: 0.05 }}
-        className="mb-5 font-body text-sm text-muted"
-      >
-        {site.role} · {site.location}
-      </motion.p>
-
-      <h1 className="relative z-10 font-heading text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl">
-        {words.map((word, i) => (
-          <span key={i} className="mr-[0.25em] inline-block overflow-hidden py-1 align-bottom">
-            <motion.span
-              className="inline-block"
-              initial={reduce ? false : { y: "110%" }}
-              animate={{ y: 0 }}
-              transition={{ duration: 0.7, ease, delay: 0.15 + i * 0.045 }}
-            >
-              {word}
-            </motion.span>
-          </span>
-        ))}
+      {/* Thesis: what I build, cycling through the disciplines */}
+      <h1 className="relative z-10 font-heading text-6xl font-extrabold leading-[0.98] tracking-tight text-foreground sm:text-7xl md:text-8xl">
+        <span className="block overflow-hidden">
+          <motion.span
+            className="block"
+            initial={reduce ? false : { y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.7, ease, delay: 0.1 }}
+          >
+            I build
+          </motion.span>
+        </span>
+        <RotatingWord words={disciplines} />
       </h1>
+
+      <motion.p
+        initial={reduce ? false : { opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease, delay: 0.35 }}
+        className="relative z-10 mt-7 max-w-xl font-body text-base leading-relaxed text-muted sm:text-lg"
+      >
+        {site.name} — Computer Science &amp; Maths student in Helsinki, working
+        across mobile, web and machine learning.
+      </motion.p>
 
       <motion.div
         initial={reduce ? false : { opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease, delay: 0.15 + words.length * 0.045 + 0.1 }}
-        className="relative z-10 mt-10 flex flex-wrap items-center gap-4"
+        transition={{ duration: 0.6, ease, delay: 0.45 }}
+        className="relative z-10 mt-8 flex flex-wrap items-center gap-4"
       >
         <a
           href="#work"
@@ -116,23 +115,18 @@ export default function Hero() {
         </a>
       </motion.div>
 
-      {/* scroll cue */}
-      <motion.a
-        href="#work"
-        aria-label="Scroll to work"
+      {/* Skills ticker — always moving, visible without scrolling */}
+      <motion.div
         initial={reduce ? false : { opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.1, duration: 0.6 }}
-        className="absolute bottom-8 left-6 hidden items-center gap-2 font-body text-xs uppercase tracking-widest text-faint sm:flex"
+        transition={{ duration: 0.6, delay: 0.6 }}
+        className="relative z-10 mt-14"
       >
-        <motion.span
-          animate={reduce ? {} : { y: [0, 6, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ArrowDown className="h-4 w-4" strokeWidth={1.5} />
-        </motion.span>
-        Scroll
-      </motion.a>
+        <p className="mb-3 font-body text-xs uppercase tracking-widest text-faint">
+          Working with
+        </p>
+        <Marquee />
+      </motion.div>
     </section>
   );
 }

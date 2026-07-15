@@ -2,7 +2,6 @@ import ScrollProgress from "./components/ScrollProgress.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Hero from "./components/Hero.jsx";
 import Stats from "./components/Stats.jsx";
-import Marquee from "./components/Marquee.jsx";
 import Projects from "./components/Projects.jsx";
 import Experience from "./components/Experience.jsx";
 import About from "./components/About.jsx";
@@ -17,7 +16,6 @@ export default function App() {
       <main>
         <Hero />
         <Stats />
-        <Marquee />
         <Projects />
         <Experience />
         <About />
