@@ -1,17 +1,7 @@
 // ── Edit your projects here ───────────────────────────────────────
+// Order matters — it's the curation. Most important first.
 // Each project: title, year, blurb, tags, and optional links.
 export const projects = [
-  {
-    title: "Coral",
-    year: "2026",
-    context: "Lumi AI Factory · Open Data Hackathon",
-    blurb:
-      "Fact-checking software built on OWI. I built the React demo frontend, handled OWI data parsing in Python, and wired up the API so backend and frontend worked seamlessly together.",
-    tags: ["React", "Python", "AI"],
-    live: "",
-    repo: "",
-    featured: true,
-  },
   {
     title: "Pecto",
     year: "2023 — 2025",
@@ -31,6 +21,17 @@ export const projects = [
       "Marketplace mobile apps for iOS and Android, wrapping the Solus City web-app with Capacitor.js. I handled native-feature integration and built web-app UI in React.",
     tags: ["React", "Capacitor.js", "JavaScript"],
     live: "https://soluscity.com",
+    repo: "",
+    featured: true,
+  },
+  {
+    title: "Coral",
+    year: "2026",
+    context: "Lumi AI Factory · Open Data Hackathon",
+    blurb:
+      "Fact-checking software built on OWI. I built the React demo frontend, handled OWI data parsing in Python, and wired up the API so backend and frontend worked seamlessly together.",
+    tags: ["React", "Python", "AI"],
+    live: "",
     repo: "",
   },
   {
