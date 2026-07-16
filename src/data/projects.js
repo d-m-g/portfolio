@@ -25,6 +25,26 @@ export const projects = [
     featured: false,
   },
   {
+    title: "Work Tracker",
+    year: "2026",
+    context: "Personal project · tracker.d-m-g.dev",
+    blurb:
+      "A work-time tracker I built and self-host. A dependency-free Python core keeps JSON as the only source of truth, and everything else — a React viewer, a SwiftUI menu-bar widget, macOS Shortcuts — calls that single writer rather than becoming a second one. 195 tests, deployed behind Caddy with a password; the demo needs none.",
+    tags: ["Python", "React", "Swift"],
+    live: "https://tracker.d-m-g.dev/demo",
+    repo: "https://github.com/d-m-g/work-tracker",
+  },
+  {
+    title: "d-m-g.dev",
+    year: "2026",
+    context: "Personal project",
+    blurb:
+      "This site. Built from scratch in React and Vite — self-hosted variable fonts, a hand-tuned dark palette, and scroll-driven motion, with no template underneath. Deployed on Vercel behind Cloudflare DNS.",
+    tags: ["React", "Vite", "Tailwind"],
+    live: "https://d-m-g.dev",
+    repo: "https://github.com/d-m-g/portfolio",
+  },
+  {
     title: "Coral",
     year: "2026",
     context: "Lumi AI Factory · Open Data Hackathon",

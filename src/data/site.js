@@ -23,7 +23,7 @@ export const stats = [
   { value: 4.55, suffix: "/5", label: "GPA at U. Helsinki", decimals: 2 },
   { value: 3, suffix: "+ yrs", label: "Building software" },
   { value: 2, suffix: "", label: "Apps live in production" },
-  { value: 6, suffix: "", label: "Shipped projects" },
+  { value: 8, suffix: "", label: "Shipped projects" },
 ];
 
 // Marquee tech strip.
