@@ -1,0 +1,22 @@
+<!-- The mark: a pink `d` on the paper ground. Shared with ../work-tracker, which
+     wears it too — one author, two sites, and the tab is where you notice that
+     first.
+
+     This is the vector original, and the rasters beside it (favicon.ico,
+     apple-touch-icon.png) are cut from it, so there is one place to change the
+     letter and one shape it comes out as. It used to live inlined as a data: URI
+     in index.html and nowhere else, which was the whole problem: Safari has never
+     supported an SVG favicon at any version, so it quietly drew nothing, and iOS
+     reads only apple-touch-icon for a Home Screen tile and will not take a data:
+     URI for it. See index.html.
+
+     `Archivo` is named but is not loaded — a favicon cannot pull a webfont, and
+     this site has never loaded it either, so the `d` has always come out in
+     whatever grotesque the viewer happened to have. The rasters were cut with this
+     same stack, which settles that shape once instead of leaving it to each
+     browser. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="20" fill="#101014"/>
+  <text x="50" y="68" font-size="56" font-family="Archivo,sans-serif" font-weight="700"
+        fill="#EC4899" text-anchor="middle">d</text>
+</svg>
