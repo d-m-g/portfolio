@@ -24,7 +24,18 @@ export default function Navbar() {
         scrolled ? "border-b border-border bg-ink/80 backdrop-blur-sm" : "border-b border-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+      {/* gap-5 is a floor, not a suggestion. justify-between only spaces things
+          out while there is slack, and on a phone there is none — the name and
+          the four labels want more room than a 390px screen has — so the two
+          groups sat flush against each other. A flex gap holds even when the row
+          is over-full.
+
+          The 20px comes out of the links: gap-4 below sm instead of gap-6 frees
+          24px across the three of them, which more than pays for it. Keeping the
+          name's gap wider than the gaps inside the menu is the point — it reads
+          as the name and the menu, not five links in a row. Unchanged from sm
+          up, where there is slack and none of this applies. */}
+      <nav className="mx-auto flex max-w-5xl items-center justify-between gap-5 px-6 py-4 sm:gap-4">
         <a
           href="#top"
           className="font-heading text-sm font-bold tracking-tight text-foreground"
@@ -34,7 +45,7 @@ export default function Navbar() {
           <span className="text-accent">.</span>
         </a>
 
-        <ul className="flex items-center gap-6 sm:gap-8">
+        <ul className="flex items-center gap-4 sm:gap-8">
           {links.map((l) => (
             <li key={l.href}>
               <a

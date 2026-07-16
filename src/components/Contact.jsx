@@ -15,9 +15,24 @@ export default function Contact() {
           <span className="text-accent">worth shipping.</span>
         </h2>
 
+        {/* The one thing on this page that would not fit a phone.
+
+            At text-2xl the address sets 371px wide, and inside this section's
+            px-6 a 390px screen leaves it 342 — so it hung 29px out, dragged the
+            document's scroll width to 395 and took the whole site with it: the
+            fixed header stretched to match and everything panned sideways. An
+            inline-flex will not wrap and an email will not hyphenate, so it just
+            pushed.
+
+            Fluid, so it fits by construction rather than by a breakpoint that
+            happens to be true on the phone I tested. The arrow and its gap are a
+            constant 32px and the address is 14.1px wide per px of type, so the
+            widest it can be is (100vw - 48 - 32) / 14.1 ≈ 7vw of type; 5vw keeps
+            a comfortable margin at 320 and still caps at the 1.875rem (text-3xl)
+            it always had from `sm` up. */}
         <a
           href={`mailto:${site.email}`}
-          className="group mt-10 inline-flex items-center gap-2 font-heading text-2xl font-bold tracking-tight text-foreground transition-colors duration-200 hover:text-accent sm:text-3xl"
+          className="group mt-10 inline-flex items-center gap-2 font-heading text-[clamp(1rem,5vw,1.875rem)] font-bold tracking-tight text-foreground transition-colors duration-200 hover:text-accent"
         >
           {site.email}
           <ArrowUpRight
