@@ -45,20 +45,10 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Blurred accent-gradient wash, fixed behind all content */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.15;
-  background: url("/bg-gradient.svg") center / 80% auto no-repeat var(--color-ink);
-  /* extra softening so blob edges never read as hard shapes */
-  filter: blur(40px) saturate(1.1);
-}
+/* The accent-gradient wash that used to live here is now the WebGL contour
+   field in components/Backdrop.jsx. */
 
-/* Subtle grain/texture instead of glow-blobs — keeps it editorial */
+/* Subtle grain/texture over the backdrop — keeps it editorial */
 body::before {
   content: "";
   position: fixed;
