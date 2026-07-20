@@ -31,7 +31,9 @@ export default function Hero() {
       </motion.div>
 
       {/* Thesis: what I build, cycling through the disciplines */}
-      <h1 className="relative z-10 font-heading text-6xl font-extrabold leading-[0.98] tracking-tight text-foreground sm:text-7xl md:text-8xl">
+      {/* Size is viewport-scaled on phones so the longest discipline never wraps
+          — a second line would resize the h1 on every word swap. */}
+      <h1 className="relative z-10 whitespace-nowrap font-heading text-[11vw] font-extrabold leading-[0.98] tracking-tight text-foreground sm:text-7xl md:text-8xl">
         <span className="block overflow-hidden">
           <motion.span
             className="block"
