@@ -1,0 +1,141 @@
+<!doctype html>
+<meta charset="utf-8" />
+<style>
+  @font-face {
+    font-family: "Zodiak";
+    src: url("../public/fonts/Zodiak-Variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-display: block;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: #101014; }
+  body { position: relative; font-family: "Zodiak", serif; }
+  canvas { position: absolute; inset: 0; width: 1200px; height: 630px; }
+
+  /* Scrim: the contour field is busy on the left where the type sits. */
+  .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, rgba(16,16,20,.88) 0%, rgba(16,16,20,.62) 42%, rgba(16,16,20,0) 78%);
+  }
+  .frame {
+    position: absolute; inset: 28px;
+    border: 1px solid rgba(255,255,255,.07); border-radius: 18px;
+  }
+  .content { position: absolute; inset: 28px; padding: 62px 66px; display: flex; flex-direction: column; }
+
+  .eyebrow {
+    font-weight: 700; font-size: 22px; letter-spacing: .34em;
+    text-transform: uppercase; color: #ec4899;
+  }
+  h1 {
+    margin-top: 44px;
+    font-weight: 700; font-size: 104px; line-height: .96;
+    letter-spacing: -.02em; color: #f4f4f6;
+  }
+  .sub {
+    margin-top: 30px; font-weight: 500; font-size: 36px;
+    letter-spacing: -.01em; color: #a5a5b2;
+  }
+  .foot {
+    margin-top: auto; display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 24px; font-weight: 500;
+  }
+  .foot .place { color: #7b7b88; }
+  .foot .dom { color: #ec4899; font-weight: 700; letter-spacing: .01em; }
+</style>
+
+<canvas id="c" width="1200" height="630"></canvas>
+<div class="scrim"></div>
+<div class="frame"></div>
+<div class="content">
+  <div class="eyebrow">Software Engineer</div>
+  <h1>Dmitrii Gorovoi</h1>
+  <div class="sub">iOS apps · web products · applied ML</div>
+  <div class="foot"><span class="place">Helsinki, Finland</span><span class="dom">d-m-g.dev</span></div>
+</div>
+
+<script>
+  // Same fragment shader as src/components/Backdrop.jsx, frozen at one frame.
+  // Two deltas: no per-pixel dither (it defeats PNG compression and there is no
+  // live gradient to band here), and the scroll-quiet term is dropped.
+  // GLSL ES 3.00, not the site's 1.00: fwidth is core here. Under WebGL2 a
+  // 1.00 shader can't reach fwidth at all — the OES_standard_derivatives
+  // extension that provides it isn't valid in a WebGL2 context, so the
+  // contour lines silently compile to nothing.
+  const FRAG = `#version 300 es
+  precision highp float;
+  out vec4 fragColor;
+  uniform vec2  uRes;
+  uniform float uTime;
+  uniform float uScroll;
+  uniform vec2  uPointer;
+
+  vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}
+  vec2 mod289(vec2 x){return x-floor(x*(1./289.))*289.;}
+  vec3 permute(vec3 x){return mod289(((x*34.)+1.)*x);}
+  float snoise(vec2 v){
+    const vec4 C=vec4(0.211324865,0.366025404,-0.577350269,0.024390243);
+    vec2 i=floor(v+dot(v,C.yy)), x0=v-i+dot(i,C.xx);
+    vec2 i1=(x0.x>x0.y)?vec2(1.,0.):vec2(0.,1.);
+    vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1;
+    i=mod289(i);
+    vec3 p=permute(permute(i.y+vec3(0.,i1.y,1.))+i.x+vec3(0.,i1.x,1.));
+    vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.);
+    m=m*m; m=m*m;
+    vec3 x=2.*fract(p*C.www)-1., h=abs(x)-0.5, ox=floor(x+0.5), a0=x-ox;
+    m*=1.79284291-0.85373472*(a0*a0+h*h);
+    vec3 g;
+    g.x=a0.x*x0.x+h.x*x0.y;
+    g.yz=a0.yz*x12.xz+h.yz*x12.yw;
+    return 130.*dot(m,g);
+  }
+  float fbm(vec2 p){ return snoise(p)*0.6 + snoise(p*2.1)*0.3; }
+
+  void main(){
+    vec2 uv = (gl_FragCoord.xy - 0.5*uRes) / uRes.y;
+    vec2 q  = uv + uPointer * 0.06;
+    float n = fbm(q * 1.3 + uTime * 0.04);
+
+    float freq  = mix(9.0, 22.0, uScroll);
+    float bands = fract(n * freq + uScroll * 2.0);
+    float d    = abs(bands - 0.5);
+    float line = 1.0 - smoothstep(0.0, fwidth(n * freq) * 1.2, d);
+
+    vec3 ink   = vec3(0.063, 0.063, 0.078);
+    vec3 slate = vec3(0.114, 0.114, 0.141);
+    vec3 hue   = mix(vec3(0.925,0.282,0.600), vec3(0.290,0.376,0.921),
+                     smoothstep(0.2, 0.9, uScroll));
+
+    vec3 col = mix(ink, slate, smoothstep(-0.4, 0.5, n));
+    col += hue * line * 0.45;
+
+    col *= 1.0 - 0.5 * pow(length(uv * vec2(0.62, 1.0)), 2.2);
+
+    fragColor = vec4(col, 1.0);
+  }`;
+
+  // webgl2: fwidth is core there. On webgl1 the OES_standard_derivatives
+  // extension silently no-ops under swiftshader, fwidth returns 0, and every
+  // contour line collapses to nothing.
+  // preserveDrawingBuffer: we draw exactly one frame and the screenshot lands
+  // several composites later — without it the buffer is cleared and the
+  // canvas screenshots blank.
+  const gl = document.getElementById("c").getContext("webgl2", { antialias: true, preserveDrawingBuffer: true });
+  const sh = (t, s) => { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o);
+    if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(o)); return o; };
+  const prog = gl.createProgram();
+  gl.attachShader(prog, sh(gl.VERTEX_SHADER, "#version 300 es\nin vec2 p; void main(){ gl_Position = vec4(p,0.,1.); }"));
+  gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FRAG));
+  gl.linkProgram(prog); gl.useProgram(prog);
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, "p");
+  gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  gl.uniform2f(gl.getUniformLocation(prog, "uRes"), 1200, 630);
+  gl.uniform1f(gl.getUniformLocation(prog, "uTime"), 18.0);
+  gl.uniform1f(gl.getUniformLocation(prog, "uScroll"), 0.1);
+  gl.uniform2f(gl.getUniformLocation(prog, "uPointer"), 0.18, 0.1);
+  gl.drawArrays(gl.TRIANGLES, 0, 3);
+</script>
